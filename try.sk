@@ -1,0 +1,3 @@
+harness void main(){
+	assert(1);
+}

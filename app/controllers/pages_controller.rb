@@ -1,4 +1,5 @@
 require "tempfile"
+require "open3"
 
 class PagesController < ApplicationController
   def sketch
@@ -17,9 +18,12 @@ class PagesController < ApplicationController
     f.write(sketchText)
     f.close
 
-    output = IO.popen('sketch ' + f.path) 
-    lines = output.readlines
+    stdin, stdout, stderr = Open3.popen3('sketch ' + f.path) 
+    lines = stdout.readlines
     stringLine = lines.map{|s| "'#{s}'"}.join(' ')
+    lines = stderr.readlines
+    stringLine += lines.map{|s| "'#{s}'"}.join(' ')
+
     @message = stringLine
   end
 

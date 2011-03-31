@@ -7,8 +7,8 @@ class PagesController < ApplicationController
   end
   def result
     sketchText = params[:text][:input]
-    File.open('temp.sk', 'w') {|f| f.write(sketchText) }
-    output = IO.popen('sketch temp.sk') 
+    File.open('~/.sketch/temp.sk', 'w') {|f| f.write(sketchText) }
+    output = IO.popen('sketch ~/.sketch/temp.sk') 
     lines = output.readlines
     stringLine = lines.map{|s| "'#{s}'"}.join(' ')
     @message = stringLine

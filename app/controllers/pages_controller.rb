@@ -1,3 +1,5 @@
+require "tempfile"
+
 class PagesController < ApplicationController
   def sketch
     @title = "Web Frontend"
@@ -7,8 +9,14 @@ class PagesController < ApplicationController
   end
   def result
     sketchText = params[:text][:input]
-    File.open('~/.sketch/temp.sk', 'w') {|f| f.write(sketchText) }
-    output = IO.popen('sketch ~/.sketch/temp.sk') 
+    if File::directory?("~/.sketch")
+      Dir.mkdir("~/.sketch")
+    end
+    f = Tempfile.new("temp.sk")
+    f.write(sketchText)
+    f.close
+
+    output = IO.popen('sketch ' + f.path) 
     lines = output.readlines
     stringLine = lines.map{|s| "'#{s}'"}.join(' ')
     @message = stringLine

@@ -11,7 +11,6 @@ class PagesController < ApplicationController
     output = IO.popen('sketch temp.sk') 
     lines = output.readlines
     stringLine = lines.map{|s| "'#{s}'"}.join(' ')
-
     @message = stringLine
   end
 

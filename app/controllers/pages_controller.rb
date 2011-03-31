@@ -13,6 +13,7 @@ class PagesController < ApplicationController
       Dir.mkdir("~/.sketch")
     end
     f = Tempfile.new("temp.sk")
+    f.chmod(0755)
     f.write(sketchText)
     f.close
 

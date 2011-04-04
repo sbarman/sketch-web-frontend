@@ -10,10 +10,8 @@ class PagesController < ApplicationController
   end
   def result
     sketchText = params[:text][:input]
-    if File::directory?("~/.sketch")
-      Dir.mkdir("~/.sketch")
-    end
-    f = Tempfile.new("temp.sk")
+
+    f = File.open("temp.sk", "w")
     f.chmod(0755)
     f.write(sketchText)
     f.close

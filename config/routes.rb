@@ -1,4 +1,7 @@
 Skserver::Application.routes.draw do
+  root :to => "pages#sketch1"
+  match "root" => "pages#sketch1"
+  match "blah" => "pages#sketch1"
   get "pages/sketch"
   get "pages/sketch1"
   post "pages/result"

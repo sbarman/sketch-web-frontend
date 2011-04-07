@@ -9,6 +9,8 @@ class PagesController < ApplicationController
     @title = "Web Frontend"
   end
   def result
+    @title = "Sketch Output"
+
     sketchText = params[:text][:input]
 
     f = File.open("temp.sk", "w")
@@ -16,11 +18,10 @@ class PagesController < ApplicationController
     f.write(sketchText)
     f.close
 
-    stdin, stdout, stderr = Open3.popen3('sketch ' + f.path) 
-    lines = stdout.readlines
-    stringLine = lines.map{|s| "'#{s}'"}.join(' ')
-    lines = stderr.readlines
-    stringLine += lines.map{|s| "'#{s}'"}.join(' ')
+    stdin, stdout_and_stderr, thr  = Open3.popen2e('sketch ' + f.path) 
+    lines = stdout_and_stderr.readlines
+    stringLine = lines.map{|s| "#{s}"}.join('')
+    stdout_and_stderr.close
 
     @message = stringLine
   end

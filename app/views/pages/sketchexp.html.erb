@@ -1,0 +1,49 @@
+<% content_for :head do %>
+    <style type="text/css" media="screen">
+        #editor { 
+            position: relative;
+            left: 0;
+            right: 0;
+            /*width: 500px;*/
+            height: 300px;
+        }
+        #sketchtext {
+            display: none;
+        }
+    </style>
+<% end %>
+
+<script type="text/javascript">
+    function submitForm() {
+        $('sketchtext').value = editor.getSession().getValue();
+        //$('sketchform').submit();
+    }
+</script>
+
+<pre id="editor"></pre>
+
+<%= form_tag({ :action => 'result_async' }, {:remote => true, :id => 'sketchform'}) do %>
+    <div class="field">
+        <%= text_area_tag "sketchtext", nil, :disable => true %><br/>
+        <%= submit_tag "Run Sketch", :onclick => "javascript:submitForm()" %>
+    </div>
+<% end %>
+
+<pre id='output'></pre>
+
+<%= javascript_include_tag "ace/ace", "ace/theme-twilight", "ace/mode-javascript" %>
+
+<script>
+    $('sketchform').observe('ajax:success', function(evt, cont){
+        var response = evt.memo;
+        $('output').update(response.responseText);
+    });
+
+    window.onload = function() {
+        editor = ace.edit("editor");
+        editor.setTheme("ace/theme/twilight");
+    
+        var JavaScriptMode = require("ace/mode/javascript").Mode;
+        editor.getSession().setMode(new JavaScriptMode());
+    };
+</script>

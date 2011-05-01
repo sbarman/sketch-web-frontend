@@ -1,10 +1,12 @@
 Skserver::Application.routes.draw do
-  root :to => "pages#sketch1"
-  match "root" => "pages#sketch1"
-  match "blah" => "pages#sketch1"
+  root :to => "pages#sketch"
+
+  #  match "demo" => "pages#sketch"
   get "pages/sketch"
-  get "pages/sketch1"
+  get "pages/sketchold"
+  get "pages/sketchexp"
   post "pages/result"
+  post "pages/result_async"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

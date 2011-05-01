@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Sketch | <%= @title %></title>
-  </head>
-  <body>
-    <form name="input" action="result" method="post">
-      <h1>Enter code below.</h1>
-      <textarea rows="25" cols="80"></textarea> <br/>
-      <input name="submit" type="submit" value="Submit"/>
-    </form>
-  </body>
-</html>
+<%= form_tag({ :action => 'result' }, {:id => 'sketchform'}) do %>
+    <div class="field">
+        <%= text_area "sketchtext", "input"  %><br />
+        <%= submit_tag "Run Sketch" %>
+    </div>
+<% end %>

@@ -7,18 +7,50 @@
             /*width: 500px;*/
             height: 300px;
         }
+        #output {
+            position: relative;
+            left: 0;
+            right: 0;
+            /*width: 500px;*/
+            height: 300px;
+            border-style:solid;
+            border-width:2px;
+            overflow: auto;
+
+        }
         #sketchtext {
             display: none;
         }
     </style>
-<% end %>
 
-<script type="text/javascript">
-    function submitForm() {
-        $('sketchtext').value = editor.getSession().getValue();
-        //$('sketchform').submit();
-    }
-</script>
+    <%= javascript_include_tag "ace/ace", "ace/theme-twilight", "ace/mode-javascript" %>
+
+    <script type="text/javascript">
+        /* Event handlers */
+        function ajax_response(evt, cont) {
+            var response = evt.memo;
+            $('output').update(response.responseText);
+        }
+    
+        function submitForm() {
+            $('sketchtext').value = editor.getSession().getValue();
+        }
+
+        /* Initialize the text editor */
+        function setAceInput() {
+            editor = ace.edit("editor");
+            editor.setTheme("ace/theme/twilight");
+    
+            var JavaScriptMode = require("ace/mode/javascript").Mode;
+            editor.getSession().setMode(new JavaScriptMode());
+        }
+
+        document.observe("dom:loaded", function() {
+            setAceInput();
+            $('sketchform').observe('ajax:success', ajax_response);
+        });
+    </script>
+<% end %>
 
 <pre id="editor"></pre>
 
@@ -29,21 +61,4 @@
     </div>
 <% end %>
 
-<pre id='output'></pre>
-
-<%= javascript_include_tag "ace/ace", "ace/theme-twilight", "ace/mode-javascript" %>
-
-<script>
-    $('sketchform').observe('ajax:success', function(evt, cont){
-        var response = evt.memo;
-        $('output').update(response.responseText);
-    });
-
-    window.onload = function() {
-        editor = ace.edit("editor");
-        editor.setTheme("ace/theme/twilight");
-    
-        var JavaScriptMode = require("ace/mode/javascript").Mode;
-        editor.getSession().setMode(new JavaScriptMode());
-    };
-</script>
+<pre id="output"></pre>

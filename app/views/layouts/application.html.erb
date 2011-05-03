@@ -8,6 +8,17 @@
         <%= yield :head %>
     </head>
     <body>
-        <%= yield %>
+        <div id="container">
+            <div id="header">
+                <h1>
+                    Sketch Online
+                </h1>
+            </div>
+            <div id="content">
+                <%= yield %>
+            </div>
+            <div id="footer">
+                UC Berkeley and MIT
+            </div>
     </body>
 </html>

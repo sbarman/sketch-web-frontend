@@ -1,6 +1,16 @@
+<% content_for :head do %>
+    <style type="text/css" media="screen">
+        #sketchtext {
+            width: 500px;
+            height: 300px;
+        }
+    </style>
+<% end %>
+
+
 <%= form_tag({ :action => 'result' }, {:id => 'sketchform'}) do %>
     <div class="field">
-        <%= text_area "sketchtext", "input"  %><br />
+        <%= text_area_tag "sketchtext", nil%><br />
         <%= submit_tag "Run Sketch" %>
     </div>
 <% end %>

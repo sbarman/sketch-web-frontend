@@ -20,8 +20,12 @@ class PagesController < ApplicationController
         @title = "Sketch Output"
 
         sketchText = params[:sketchtext]
+        sketchTempDir = "sketchtemp/"
 
-        f = File.open("temp.sk", "w")
+        time = Time.now
+        fileName = time.strftime("%Y-%m-%d-%H:%M:%S.sk")
+
+        f = File.open(sketchTempDir + fileName, "w")
         f.chmod(0755)
         f.write(sketchText)
         f.close

@@ -23,7 +23,7 @@
         }
     </style>
 
-    <%= javascript_include_tag "ace/ace", "ace/theme-twilight", "ace/mode-javascript" %>
+    <%= javascript_include_tag "ace/ace", "ace/theme-twilight", "ace/mode-sketch" %>
 
     <script type="text/javascript">
         /* Event handlers */
@@ -33,6 +33,7 @@
         }
     
         function submitForm() {
+            $('output').update('Synthesizing...');
             $('sketchtext').value = editor.getSession().getValue();
         }
 
@@ -41,9 +42,9 @@
             editor = ace.edit("editor");
             editor.setTheme("ace/theme/twilight");
     
-            var JavaScriptMode = require("ace/mode/javascript").Mode;
-            editor.getSession().setMode(new JavaScriptMode());
-        }
+/*            var SketchMode = require("ace/mode/").Mode; 
+            editor.getSession().setMode(new SketchMode());
+*/        }
 
         document.observe("dom:loaded", function() {
             setAceInput();

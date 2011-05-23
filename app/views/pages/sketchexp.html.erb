@@ -55,7 +55,7 @@
 
 <pre id="editor"></pre>
 
-<%= form_tag({ :action => 'result_async' }, {:remote => true, :id => 'sketchform'}) do %>
+<%= form_tag({ :action => 'result' }, {:remote => true, :id => 'sketchform'}) do %>
     <div class="field">
         <%= text_area_tag "sketchtext", nil, :disable => true %><br/>
         <%= submit_tag "Run Sketch", :onclick => "javascript:submitForm()" %>

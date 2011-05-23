@@ -8,10 +8,6 @@ class PagesController < ApplicationController
         @title = "Web Frontend"
     end
 
-    def sketchold
-        @title = "Web Frontend"
-    end
-
     def sketchexp
         @title = "Web Frontend"
     end
@@ -30,27 +26,17 @@ class PagesController < ApplicationController
         f.write(sketchText)
         f.close
 
-        stdin, stdout_and_stderr, thr  = Open3.popen2e('sketch ' + f.path) 
+	logger.info f.path
+
+        stdin, stdout_and_stderr, thr  = Open3.popen2e('script/run-sketch.sh ' + f.path) 
         lines = stdout_and_stderr.readlines
         stringLine = lines.map{|s| "#{s}"}.join('')
         stdout_and_stderr.close
-
-        @message = stringLine
-    end
-
-    def result_async
-        sketchText = params[:sketchtext]
-
-        f = File.open("temp.sk", "w")
-        f.chmod(0755)
-        f.write(sketchText)
-        f.close
-
-        stdin, stdout_and_stderr, thr  = Open3.popen2e('sketch ' + f.path) 
-        lines = stdout_and_stderr.readlines
-        stringLine = lines.map{|s| "#{s}"}.join('')
-        stdout_and_stderr.close
-
-        render :text => stringLine
+	
+	if request.xhr?
+            render :text => stringLine
+	else
+            @message = stringLine
+   	end
     end
 end

@@ -41,7 +41,7 @@
         function setAceInput() {
             editor = ace.edit("editor");
             editor.setTheme("ace/theme/twilight");
-    
+            editor.getSession().setValue('');    
 /*            var SketchMode = require("ace/mode/").Mode; 
             editor.getSession().setMode(new SketchMode());
 */        }
@@ -53,7 +53,8 @@
     </script>
 <% end %>
 
-<pre id="editor"></pre>
+<pre id="editor">This website has only been tested with Firefox. If code editor does not appear, please use the non-javascript version <%= link_to('here', :controller => 'pages', :action => 'sketch')%>.
+</pre>
 
 <%= form_tag({ :action => 'result' }, {:remote => true, :id => 'sketchform'}) do %>
     <div class="field">
